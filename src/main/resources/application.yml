@@ -1,0 +1,17 @@
+server:
+  port: 8080 # The gateway will listen on port 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # Rule 1: Routing to the Authentication Service
+                    - id: auth_service_route    # A unique name for this rule for logging/monitoring.
+                      uri: http://auth-service:8081 # The destination address of the auth-service.
+                      predicates:
+                        # This is the "IF" condition. It triggers if the request path matches the pattern.
+                        - Path=/auth/**
